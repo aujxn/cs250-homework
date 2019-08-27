@@ -1,0 +1,290 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#2}
+\newcommand{\hmwkDueDate}{July 9, 2019}
+\newcommand{\hmwkClass}{CS250}
+\newcommand{\hmwkClassTime}{Summer19}
+\newcommand{\hmwkClassInstructor}{Steven Libby}
+\newcommand{\hmwkAuthorName}{\textbf{Austen Nelson}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:15pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+% \maketitle
+
+% \pagebreak
+
+\begin{homeworkProblem}
+   Determine if the following are injective (one to one), surjective (onto), or total.
+
+   \begin{itemize}
+      \item \(f \colon \mathbb{R} \to \mathbb{R} \\ f(x) =  \sin{x}\) \\
+         IS total because \(\forall x \in \mathbb{R}, \sin{x} \in \mathbb{R}\)\\
+         NOT injective because \(\sin{0} \equiv \sin{2\pi}\)\\
+         NOT surjective because \(x \in \mathbb{R}, \sin{x} \ne 5\)
+
+      \item \(f \colon \mathbb{R} \to \mathbb{R} \\ f(x) = \sqrt{x}\) \\
+         NOT total because \(\sqrt{-1} \notin \mathbb{R}\) \\
+         IS injective because if $\sqrt{x} = \sqrt{y}$ then $x = y$\\
+         NOT surjective because \(x \in \mathbb{R}, \sqrt{x} \ne -\)
+
+      \item \(f \colon \mathbb{N} \to \mathbb{R}^+ \\ f(x) = \sqrt{x}\) \\
+         IS total because \(\forall x \in \mathbb{N}, \sqrt{x} \in \mathbb{R}^+\) \\
+         IS injective because every root is unique \\
+         NOT surjective because \(x \in \mathbb{R}, f(x) \ne 2.5\)
+
+      \item \(f \colon \mathbb{R}^+ \to \mathbb{N} \\ f(x) = \sqrt{x}\) \\
+         NOT total because \(\sqrt{3} \notin \mathbb{N}\) \\
+         IS injective because if $\sqrt{x} = \sqrt{y}$ then $x = y$\\
+         IS surjective because \(\forall x \in \mathbb{N}, x^2 \in \mathbb{R}\)
+
+      \item \(f \colon \mathbb{R} \to \mathbb{R}^+ \\ f(x) = x^2\) \\
+         NOT total because \(0^2 \notin \mathbb{R}\) \\
+         NOT injective because \(f(2) \equiv f(-2)\) \\
+         IS surjective because \(\forall x \in \mathbb{R}^+, \sqrt(x) \in \mathbb{R}\)
+
+      \item \(f \colon \mathbb{R} \to \mathbb{R} \\ f(x) = x^3\) \\
+         IS total because \(\forall x \in \mathbb{R}, x^2 \in \mathbb{R}\) \\
+         IS injective because \(\forall x \in \mathbb{R}, x^3\) is unique \\
+         IS surjective because \(\forall x \in \mathbb{R}, x^\frac{1}{3} \in \mathbb{R}\)
+   \end{itemize}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Determine if the relations are reflexive, symmetric, antisymmetric, or transitive.
+   \begin{itemize}
+      \item \(a \sim b\) if \(a + b = 10\) \\
+         NOT reflexive \(3+3 \ne 10\) \\
+         IS symmetric \(a+b = 10 \equiv b+a = 10\) \\
+         NOT antisymmetric \(3+7 = 10\) and \(7+3=10\) \\
+         NOT transitive \(4+6 = 10, 6+4=10, 4+4 \ne 10\)
+
+      \item \(a \sim b\) if \(a\) and \(b\) are both even or odd \\
+         IS reflexive \(a \sim a\) if a is even or odd \\
+         IS symmetric \(e_1 \sim e_2\) and \(e_2 \sim o_1, o_1 \sim o_2\) and \(o_2 \sim o_1, e \nsim o\) and \(o \nsim e\) \\
+         NOT antisymmetric \(2 \sim 4\) and \(4 \sim 2\) and \(2 \ne 4\) \\
+         IS transitive because \(a \sim b, b \sim c, a \sim c\) meaning a, b, and c are all even or all odd 
+
+      \item \(\frac{p}{q} \sim \frac{r}{s}\) if \(q \le s\) \\
+         IS reflexive \(\frac{p}{q} \sim \frac{r}{q}\) because \(q = q\) \\
+         NOT symmetric \(\frac{1}{2} \sim \frac{1}{4}\) but \(\frac{1}{4} \nsim \frac{1}{2}\) \\
+         NOT antisymmetric \(\frac{3}{7} \sim \frac{5}{7}\) and \(\frac{5}{7} \sim \frac{3}{7}\) but \(\frac{3}{7} \ne \frac{5}{7}\) \\
+         IS transitive \(q \le s, s \le z, q \le z\)
+
+      \item if s and t are strings, then \(s \sim t\) if \(s = reverse(t)\) \\
+         NOT reflexive, CAT $\nsim$ CAT \\
+         IS symmetric, every string is the reverse of its reverse \\
+         NOT antisymmetric CAT $\ne$ TAC \\
+         NOT transitive, it is symmetric but no reflexive so it cannot be transitive
+
+      \item \(a \sim b\) if \(b = c*a\) for some c $a,b,c \in \mathbb{N}$\\
+         IS reflexive, for \(c=1, a \sim a\) \\
+         NOT symmetric, for \(2~4\) but \(4~2\) \\
+         IS antisymmetric for same reason as symmetric \\
+         IS transitive for same reason as symmetric \\
+         For other values of c, none of these properties hold except antisymmetry. I don't think I totally understood this problem.
+
+      \item \(a \sim b\) if \(a^b = b^a\) \\
+         IS reflexive, \(a^a \equiv a^a\) \\
+         IS symmetric, \(a^b = b^a \equiv b^a = a^b\) \\
+         NOT antisymmetric, \(2 \sim 4\) and \(4 \sim 2\) but \(4 \ne 2\) \\
+         IS transitive because this is an equivalence relation (symmetric reasoning)
+   \end{itemize}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove that if \(f \colon B \to C\) is injective, and \(g \colon A \to B\) is injective, then \(f \circ g\) is also injective. \\
+   \begin{enumerate}
+      \item Assume \(f \circ g (a) = b\) and \(f \circ g (a) = c\) (that \(f \circ g\) is not injective)
+      \item \(g(a) = d\) and only d (definition of injective)
+      \item Given the assumption, \(f(d) = b\) and \(f(d) = c\) (definition of composition) resulting that \(f \colon B \to C\) is not injective, which is a contradiction.
+   \end{enumerate}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove or disprove.
+   \begin{itemize}
+      \item For any sets A and B, \(\mathbb{P}(A \cap B) = \mathbb{P}(A) \cap \mathbb{P}(B)\)
+         \begin{align*}
+            x \in \mathbb{P}(A) \cap \mathbb{P}(B) && \text{(assumption)} \\
+            x \in \mathbb{P}(A) \land x \in \mathbb{P}(A) && \text{(definition of intersect)} \\
+            x \subseteq A \land x \subseteq B && \text{(definition of powerset)} \\
+            x \subseteq A \cap B && \text{(definition of intersect)} \\
+            x \in \mathbb{P}(A \cap B) && \text{(definition of powerset)} \\
+            \mathbb{P}(A \cap B) = \mathbb{P}(A) \cap \mathbb{P}(B) && \text{(set extensionality)}
+         \end{align*}
+         \item For any sets A and B, \(\mathbb{P}(A \cup B) = \mathbb{P}(A) \cup \mathbb{P}(B)\) \\
+            Counter example: \\
+            \(\mathbb{P}(\{1\} \cup \{2\}) = \{\{\}, \{1\}, \{2\}, \{1, 2\} \} \\
+            \mathbb{P}(\{1\}) \cup \mathbb{P}(\{2\}) = \{\{\}, \{1\}, \{2\}\}\)
+   \end{itemize}
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove that \(A^c \cup B^c = {(A \cap B)}^c\)
+   \begin{align*}
+      x \in {(A \cap B)}^c && \text{(assumption)} \\
+      x \notin A \cap B && \text{(definition of compliment)} \\
+      x \notin A \lor x \notin B && \text{(definition of intersection)} \\
+      x \in A^c \lor x \in B^c && \text{(definition of compliment)} \\
+      x \in A^c \cup B^c && \text{(definition of logical or)} \\
+      A^c \cup B^c = {(A \cap B)}^c && \text{(set extensionality)}
+   \end{align*}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+   Prove there will always be an odd number of doors at the bottom of the triangle. \\
+   \begin{enumerate}
+      \item Take any series of blue and green dots starting with blue and ending with green.
+      \item Traverse the dots from start to finish. The first green dot encountered will create the first door. If the first green dot is the last dot, there is only one door (odd).
+   \item Traverse to the next blue dot. If all the remaining dots are green, there is only one door (odd). If there is another blue dot, there is two doors. Two is an even number. An even plus and even is an even and an even plus an odd is an odd. Zero plus an even is an even and zero plus an odd is an odd. This means we can ignore everything before this dot, making it the new start with zero doors.
+   \item Repeat steps two through four until you reach the last dot. The number of doors in the final recursive problem can only be one.
+   \end{enumerate}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+   If \(f \colon A \to B\) and \(g \colon A \to B\), and \(\forall x \in A, f(x) = g(x)\) then \(f = g\). Show this is an equivalence relation. \\
+   \begin{itemize}
+      \item Reflexive: \(\forall x \in A, xRx\) It is given that \(f(x) = g(x)\)
+      \item Symmetric: \(\forall x \in A, xRy \land yRx\) Because \(f(x) = g(x)\) \(x \equiv y\) meaning \(yRx\) is always true
+      \item Transitive: Let x, y, and z be in A. Suppose xRy and yRz. Because x = y and y = z, x must be equal to z and xRz given that \(f(x) = g(x)\).
+   \end{itemize}
+   Because this relation is reflexive, symmetric, and transitive, it is an equivalence relation.
+\end{homeworkProblem}
+\begin{homeworkProblem}
+   Show that a dictionary order is a partial order. \\
+   A relation that is reflexive, antisymmetric, and transitive is a partial order. \\
+   \begin{itemize}
+      \item Reflexive: A string is always the same as itself. This means that dictionary order is reflexive.
+      \item Antisymmetric: Take any two words a and b. If \(a \le b\) and \(b \le a\) then \(a \equiv b\). This is true because if words are not identical, then one must be less than the other given the definition of dictionary order. This means that symmetry outside of equality is impossible.
+      \item Transitive: Take any 3 words a, b, and c. If \(a \le b\) and \(b \le c\) then \(a \le c\). If a[0] $\le$ b[0] and b[0] $\le$ c[0] then a[0] $\le$ c[0] following from the definition of $\le$ and the transitivity property of order. Doing this for every letter in each word demonstrates that dictionary order also follows this property.
+   \end{itemize}
+\end{homeworkProblem}
+\end{document}

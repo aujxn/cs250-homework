@@ -1,0 +1,217 @@
+\documentclass{exam}
+\usepackage{amsmath}
+\usepackage{xlop} % for addition and multiplication
+\usepackage{array} % for right columns in tabular
+\usepackage{url}
+\usepackage[procnames]{listings}
+\usepackage{color}
+
+% code for making a fixed width right aligned column in tabular
+\newcolumntype{x}[1]{%
+>{\raggedleft\hspace{0pt}}p{#1}}%
+
+
+\newcommand\N{\mathbf{N}}
+\newcommand\Z{\mathbf{Z}}
+\newcommand\E{\mathbf{E}}
+\renewcommand\O{\mathbf{O}}
+\newcommand\Q{\mathbf{Q}}
+\renewcommand\P{\mathbf{P}}
+\def\land{\wedge}
+\def\lor{\vee}
+\def\xor{\oplus}
+\def\T{\top}
+\def\F{\bot}
+\def\lnot{\neg}
+
+\lhead{Austen Nelson}
+\rhead{HW4}
+
+\title{CS250 homework 4}
+\author{name:\underline{Austen Nelson}}
+\date{Due: 7/23/19}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+ 
+\lstset{language=Python, 
+        basicstyle=\ttfamily\small, 
+        keywordstyle=\color{keywords},
+        commentstyle=\color{comments},
+        stringstyle=\color{red},
+        showstringspaces=false,
+        identifierstyle=\color{green},
+        procnamekeys={def,class}}
+ 
+\question
+The Fibonacci numbers are a fun sequence of numbers that show up in math a lot.
+The sequence is $1,1,2,3,5,8,13,21,\ldots$, and we compute each number by adding the previous two.
+Write an iterative (while loop) python function to compute the $n^{th}$ Fibonacci number.
+so \texttt{fib(6)} should return \texttt 8.
+\begin{lstlisting}
+def fib_iter(a):
+   num0 = 0
+   num = 1
+
+   for i in range(a - 1):
+      old = num
+      num = num + num0
+      num0 = old
+
+   return num
+\end{lstlisting}
+
+\question
+Now write a recursive program to compute the $n^{th}$ Fibonacci number.
+\begin{lstlisting}
+def fib_rec(a):
+   if a <= 1:
+      return a
+
+   return fib_rec(a - 1) + fib_rec(a - 2)
+\end{lstlisting}
+
+\question
+Let $e = gcd(n,m\%n)$, Prove that $e | m$ and $e | n$ \\
+\begin{align*}
+   n, m, e, x, y, r, q, z \in \N && \text{variable declarations} \\
+   m \mod n = r && \text{initializing r} \\
+   m = qn + r && \text{rewriting modulus} \\
+   e \mid n && \text{definition of gcd} \\
+   n = ze \text{ so } qn \equiv qze && \text{substitution} \\
+   e \mid qn \text{ or } qn = xe && \text{because $qn = qze$ and definition of divides} \\
+   e \mid r \text{ or } r = ye && \text{definition of gcd and definition of divides} \\
+   m = xe + ye \text{ or } m = e(x+y) && \text{substitution and algebra} \\
+   e \mid m && \text{definition of divides}
+\end{align*}
+
+\question
+Prove that for any $a,b,c\in \N$ if $a | b$ and $a | c$ then $a | bx + cy$ for any $x,y\in \N$.
+\begin{align*}
+   a, b, c, x, y, s, z \in \N && \text{variable declarations} \\
+   b = az \text{ and } c = as && \text{definition of divides} \\
+   bx + cy \equiv azx + asy \equiv a(zx + sy) && \text{substitution and factor} \\
+   a \mid a(zx + sy) && \text{definition of divides} \\
+\end{align*}
+
+\question
+The distance between two vertices in a graph is the length of the shortest path between them.\\
+We usually write the distance between $u$ and $v$ in graph $G$ as $d(u,v)$.\\
+Show that for any three vertices $u,v,t \in G$ $d(u,v) \le d(u,t) + d(t,v)$. \\
+\\
+Case 1: t is on the shortest path from u to v. $d(u,t) + d(t,v) = d(u,v)$ because if there exists a shorter path (u,t) or (t,v) then there exists a path shorter than our shortest path (u,v).
+\\
+Case 2: t is not on the shortest path from u to v. Path (u,t) must diverge from shortest path (u,v). $d(u,t) + d(t,v) > d(u,v)$ because path $u \to t \to v$ is not the shortest path (u,v).
+
+\question
+In the video \url{https://www.youtube.com/watch?v=2SUvWfNJSsM}
+he shows that you can solve towers of hanoi by counting in binary.
+Make this explicit by writing a python function \texttt{move\_disk(n)} where \texttt n
+is a binary number.
+\texttt{move\_disk} should return the number of the disk to be moved.
+So, to move the $3^{rd}$ disk, you'd return 3.
+You can test your code in \texttt{hanoi.py} on d2l.
+Right now it just loops forever
+
+\begin{lstlisting}
+def move_disk(i):
+   h = 5
+   while h > 0:
+      if i % 2**h == 0:
+         return h + 1
+      h = h - 1
+   return 1
+\end{lstlisting}
+
+\question
+give a bijection as a python function for
+\begin{itemize}
+    \item $\E \to \N$
+
+\begin{lstlisting}
+def E_N(even)
+   return even/2
+\end{lstlisting}
+
+    \item $\N \to \Z$
+
+\begin{lstlisting}
+import math
+
+def N_Z(nat)
+   return (-1 ** nat) * math.floor(nat / 2)
+\end{lstlisting}
+
+    \item $\N \to \Q^+$
+
+\begin{lstlisting}
+import math
+from fractions import Fraction
+
+def N_Qpos(nat)
+   z = 0
+
+   #Calkin-Wilf series
+   for i in range(nat):
+      z = Fraction(1, 2 * math.floor(z) - z + 1)
+
+   return z
+\end{lstlisting}
+
+    \item $\Z \to \Q$
+
+\begin{lstlisting}
+def Z_Q(an_int)
+   if an_int == 0:
+      return 0
+
+   if an_int > 0:
+      return N_Qpos(an_int)
+
+   return -1 * N_Qpos(-1 * an_int)
+\end{lstlisting}
+
+    \item $\E \to \Q$
+
+\begin{lstlisting}
+def E_Q(even)
+   return Z_Q(N_Z(E_N(even)))
+\end{lstlisting}
+
+\end{itemize}
+
+\question
+
+Let's try to find a use for this infinity nonsense.\\
+$\ $\\
+In computer science it can be useful to look at problems as a language.\\
+A language is just a set of finite strings.\\
+So we can make a language describing $\pi$ as $L_\pi = \{"3", "3.1", "3.14", "3.141", \ldots\}$\\
+$\ $\\
+So why do we care about languages?\\
+Well, we can phrase all of our problems in CS as different languages.\\
+For example $L_{factor} = \{"6=2\cdot3", "12=2\cdot2\cdot3", \ldots\}$\\
+is the language of numbers and their factors.\\
+We can make the language of graphs and their shortest paths, the languages of lists and their sorting.
+Really we can make a language for any problem.\\
+$\ $\\
+A language is decidable if there is a program that can (eventually) produce any string in that language.\\
+$\ $\\
+We want to prove that there is at least 1 undecidable language.\\
+That is, there is a problem that can't be solved by a program.\\
+$\ $\\
+First show that there are countably many programs we can write.\\
+Hint: what happens when you compile a program?\\
+A program is just a string. A string can be represented as a binary number. Therefore, a program is just a number within $\N$. This means we have an injection from programs to $\N$ and that there are countably infinite possible programs. \\
+second show that there are uncountably many languages.\\
+As stated in the example every real number can be represented as a language. This means we there exists a surjection from programs to the reals and that there is an uncountable number of languages.
+
+\end{questions}
+\end{document}

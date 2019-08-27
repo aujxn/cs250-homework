@@ -1,0 +1,12 @@
+bin/
+include/
+lib/
+lib64/
+pyenv.cfg
+src/
+*.aux
+*.dvi
+*.log
+homework/notes/
+homework/latex-homework-template/
+

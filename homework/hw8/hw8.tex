@@ -1,0 +1,413 @@
+
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{empheq}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{url}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\newcommand\dplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
+\newcommand*\widefbox[1]{\fbox{\hspace{.5em}#1\hspace{.5em}}}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+   \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+   \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+   \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+   \stepcounter{#1}
+   \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+   \ifnum#1>0
+   \setcounter{homeworkProblemCounter}{#1}
+   \fi
+   \section{Problem \arabic{homeworkProblemCounter}}
+   \setcounter{partCounter}{1}
+   \enterProblemHeader{homeworkProblemCounter}
+}{
+   \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#8}
+\newcommand{\hmwkDueDate}{August 27, 2019}
+\newcommand{\hmwkClass}{CS250}
+\newcommand{\hmwkClassTime}{Summer19}
+\newcommand{\hmwkClassInstructor}{Steven Libby}
+\newcommand{\hmwkAuthorName}{\textbf{Austen Nelson}}
+
+%
+% Title Page
+%
+
+\title{
+   \vspace{2in}
+   \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+   \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:15pm}\\
+   \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+   \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+% \maketitle
+
+% \pagebreak
+
+\begin{homeworkProblem}
+Give The $\Theta$ for the following.\\
+
+Justify your answer.
+
+\[
+   f(n)  \in \Theta (g(n)) \iff n_0 \in \mathbf{N}, \;
+   \forall n > n_0, \; \exists c_1, c_2 \in \mathbf{R} \colon
+   c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n)
+\]
+
+   \begin{flalign}
+      f(n) & \in \Theta (g(n)) && c_1 && c_2 &\\
+      5x^2 + 4x + 3 & \in \Theta (x^2) && 1 && 12 &\\
+      2^n + n! & \in \Theta (n!) && 1 && 3 &\\
+      n^2 + 2^n & \in \Theta (2^n) && 1 && 3 &\\
+      \log{n} + n & \in \Theta (n) && 1 && 2&
+   \end{flalign}
+
+   The last one is the only one that cannot be verified by setting up a simple inequality. \\
+   Upper Bound:
+   \begin{flalign*}
+      \log{n!} &= \log{1} + \log{2} + \log{3} + \cdots + \log{n} &\\
+               &= \sum_{i=1}^{n} \log{i} &\\
+               &\leq n\log{n} && \text{There are $n\log{x}$ and each $\log{x}$ is $\leq \log{n}$}&\\
+               c_2 &= 1&
+   \end{flalign*}
+
+   Lower Bound:
+   \begin{flalign*}
+      &= \sum_{i=1}^{n} \log{i} &\\
+      &\geq \sum_{i=\frac{n}{2}}^{n} \log{i} && \text{chop off the first half of the sum}&\\
+      &\geq \sum_{i=\frac{n}{2}}^{n} \log{\frac{n}{2}} && \text{$\frac{n}{2} \leq i$ always}&\\
+      &\geq \frac{n}{2} \log{\frac{n}{2}} && \text{reduce sum} &\\
+  c_1 &= \frac{1}{2}&
+   \end{flalign*}
+\end{homeworkProblem}
+\pagebreak
+
+\begin{homeworkProblem}
+Give a closed form for the following, then give the $\Theta$ \\
+
+Master Theorem:
+
+\begin{flalign*}
+   T(n) &= aT\left(\frac{n}{b}\right) + f(n) &\\
+        &= a^k \cdot T(1) + \sum_{i=0}^{k-1}a^i \cdot f\left(\frac{n}{b^i}\right) &\\
+   T(n) &\in 
+      \begin{cases}
+         \Theta(n^{\log_b{a}})               &f(n) \in \mathbf{O}(n^{\log_b{a}})\\
+         \Theta(n^{\log_b{a}}\cdot \log n)   &f(n) \in \Theta(n^{\log_b{a}})\\
+         \Theta(f(n))                        &f(n) \in \Omega(n^{\log_b{a}})
+      \end{cases}&
+\end{flalign*}
+
+\begin{enumerate}[{(a)}]
+\item
+\begin{flalign*}
+   a_0 &= 5&\\
+   a_n &= 3a_{n-1}&\\
+       &= 3(3a_{n-2})&\\
+       &= 3(3(3a_{n-3}))&\\
+       &= 3^n(a_0)&\\
+       &= 3^n \cdot 5 \in \Theta (3^n)&
+\end{flalign*}
+\item
+\begin{flalign*}
+   a_4 &= 2&\\
+   a_n &= a_{n-1} + \log_2(n)&\\
+       &= a_{n-2} + \log_2(n-1) + \log_2(n)&\\
+       &= a_{n-3} + \log_2(n-2) + \log_2(n-1) + \log_2(n)&\\
+       &= a_4 + \log_2\left(\frac{n!}{4!}\right)&\\
+       &= 2 + \log_2 \frac{n!}{24} \in \Theta (n\log{n})&
+\end{flalign*}
+\item
+\begin{flalign*}
+   a_1 &= 1&\\
+   a_n &= 2a_{n-2} + 1&\\
+       &= 2(2a_{n-4} + 1) + 1&\\
+       &= 2(2(2a_{n-6} +1) + 1) + 1&\\
+       &= 2^{\frac{n-1}{2}} + \sum_{i=1}^{\frac{n-1}{2}} 2^{i-1}&\\
+       &= a_1 \cdot 2^{\frac{n+1}{2}}&\\
+       &=2^{\frac{n+1}{2}} \in \Theta(2^n)&
+\end{flalign*}
+\item
+\begin{flalign*}
+   T(1) &=1&\\
+   T(n) &=3T\left(\frac{n}{2}\right) + 1&\\
+   a    &=3&\\
+   b    &=2&\\
+   k    &=\log_2{n}&\\
+   f(n) &=1&\\
+   T(n) &=3^{\log_2{n}} + \sum_{i=1}^{\log_2{n}-1} 3^i&\\
+        &=n^{\log_2{3}} + \frac{3^{\log_2{n}} - 1}{2} &\\
+        &=\frac{3n^{\log_2{3}} - 1}{2} \in \Theta(n^{\log_2{3}})&
+\end{flalign*}
+\item
+\begin{flalign*}
+   T(1) &=4&\\
+   T(n) &=T\left(\frac{k}{3}\right) + 4&\\
+   a    &=1&\\
+   b    &=3&\\
+   k    &=\log_3{n}&\\
+   f(n) &=4&\\
+   T(n) &=1^{k} 4 + \sum_{i=1}^{\log_{3}{n}-1}1^i 4&\\
+        &= 4 + 4(\log_{3}{n}-1) \in \Theta(\log n)&
+\end{flalign*}
+\item
+\begin{flalign*}
+   T(n) &=3T(n-2) + 4(n-2) + 2&\\
+        &=3(3T(n-4) + 4(n-4) + 2) + 4(n-2) + 2&\\
+        &=3(3(3T(n-6) + 4(n-6) + 2) + 4(n-4) + 2) + 4(n-2) + 2&\\
+        &=3^{\frac{n}{2}} + \sum_{i=1}^{\frac{n}{2}}3^{\frac{n}{2}-i} \cdot (4(2i-2) + 2)&\\
+        &=3^{\frac{n}{2} + 1} - 2n + 3^{\frac{n}{2}}-3 \in \Theta(3^n)&
+\end{flalign*}
+\end{enumerate}
+\end{homeworkProblem}
+\pagebreak
+
+\begin{homeworkProblem}
+   Prove \textbf{theorem 2:} $x^k \in \mathbf{O}(x^{k + c})$ \\
+   \\
+   Let $c_1 = 1$ and assuming $k \in \mathbf{N}$ \\
+   If $x^k \leq c_1 \cdot x^{k+c}$ then $x^k \in \mathbf{O}(x^{k + c})$ \\
+   $\frac{x^k}{x^{k+c}} \leq c_1$ \\
+   $\frac{1}{x^c} \leq c_1$ is true for all positive c and $x>k$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove \textbf{theorem 3:} $x^k + c\cdot x^{k-r} \in \mathbf{O}(x^k)$ \\
+   \\
+   Assuming $k,r,x \in \mathbf{N}\\$
+   Let $c_1 = 1 + c$\\
+   If $x^k + c\cdot x^{k-r} \leq c_1(x^k)$ for some $c_1$ then $x^k + c\cdot x^{k-r} \in \mathbf{O}(x^k)$ \\
+   $1 + c\cdot x^{-r} \leq c_1$ \\
+   $\frac{1}{x^r} \leq 1$ will always be true.
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove \textbf{theorem 5:} if $f(n) \in \mathbf{O}(g(n))$ and $g(n) \in \mathbf{O}(h(n))$, then $f(n) \in \mathbf{O}(h(n))$\\
+   \\
+   If $f(n) \in \mathbf{O}(g(n))$ then there exists a $c_1$ such that $f(n) \leq c_1 \cdot g(n)$\\
+   and if $g(n) \in \mathbf{O}(h(n))$ then there exists a $c_2$ such that $g(n) \leq c_2 \cdot h(n)$\\
+   Let $c_3 = c_1 \cdot c_2$. Then $f(n) \leq c_1 g(n) \leq c_3 h(n)$\\
+   Due to the transitivity of $\leq$, it must be that $f(n) \in \mathbf{O}(h(n))$
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Give the $\Theta$ running time for the following selection sort algorithm
+\begin{verbatim}
+def selSort(l):
+    for i in range(len(l)):
+        min = l[i]
+        minI = i
+        for j in range(i,len(l)):
+            if l[j] < min:
+                minI = j
+                min = l[j]
+            #end if
+        # end for
+        (l[i], min) = (min, l[i])
+    # end for
+\end{verbatim}
+For the first element you have to compare it with $n-1$ items.
+
+For the second element you have to compare with $n-2$ items.
+
+The total number of compares is $\sum_{i=1}^{n} n-i$ or $\frac{n^2-n}{2} \in \Theta(n^2)$
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+\begin{verbatim}
+def badSort(l):
+    n = len(l)
+
+    if n == 1:
+        return l
+
+    first = badSort(l[0:n-2])
+    middle = badSort(l[1:n-1])
+    end = badSort(l[2:n])
+
+    return [first[0]] + middle + [end[n-1]]
+\end{verbatim}
+   \begin{enumerate}[{(a)}]
+      \item Give the recurrence relation for badSort\\
+         remember \texttt{l[a:b]} copies the elements from \texttt{l[a]} to \texttt{l[b]}\\
+         \\
+         Assuming no copies are made on the return (I'm sure there are but
+         I have no idea how the python list is implemented)
+         each recursive call only takes 2 items off the length and 3 calls are made.\\
+            $T(n) = 3T(n-2)$ or $T(n) = 3^{n-1}{2}$ \\
+    \item Give the $\Theta$ for badSort \\
+       \\
+       $T(n) \in \Theta(3^n)$
+\end{enumerate}
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+The following algorithm is the merge sort we way in class
+\begin{verbatim}
+def merge(low, high):
+    i = 0
+    j = 0
+    merged = []
+    while i < len(low) and j < len(high):
+        if low[i] < high[j]:
+            merged += [low[i]]
+            i += 1
+        else:
+            merged += [high[j]]
+            j += 1
+    return merged + low[i:] + high[j:]
+
+def mergeSort(lst):
+    n = len(lst)
+    n2 = int(n/2)
+
+    # base case, if our list is 0, or 1 element, the its sorted
+    if n <= 1:
+        return lst
+
+    # recursive case: split the list in half
+    # sort the halves
+    # merge the lists together
+    low = mergeSort(lst[0:n2])
+    high = mergeSort(lst[n2:n])
+    lst = merge(low,high)
+
+    return lst
+\end{verbatim}
+   \begin{enumerate}[{(a)}]
+      \item Give the $\Theta$ running time for merge.\\
+          hint: what is the input size for merge? \\
+          \\
+          Merge does one compare and one move for each of the items in the two inputs. \\
+          This means merge is linear time $\in \Theta(n)$
+    \item Use part 1 to give a recurrence relation for the running time of mergeSort\\
+       \\
+         $T(n) = 2T(\frac{n}{2}) + n$
+    \item Solve the recurrence to get a $\Theta$ running time for mergesort.
+
+       \begin{flalign*}
+          a &= 2 &\\
+          b &= 2 &\\
+          f(n) &= n &\\
+          k &=\log_{2}{n} &\\
+          T(n) &=2^{\log_2{n}} \cdot 1 + \sum_{i=0}^{\log_2{n} - 1} 2^i \cdot \frac{n}{2^i} &\\
+               &=n + n \cdot \log_2{n} &\\
+          &\text{master theorem:} &\\
+          f(n) &\in \Theta (n^{\log_{2}{2}}) &\\
+          T(n) &\in \Theta (n^{\log_{2}{2}} \cdot \log n) &\\
+          T(n) &\in \Theta (n\log{n})&
+       \end{flalign*}
+
+   \end{enumerate}
+\end{homeworkProblem}
+\end{document}

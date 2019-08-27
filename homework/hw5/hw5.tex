@@ -1,0 +1,254 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{empheq}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\newcommand\dplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
+\newcommand*\widefbox[1]{\fbox{\hspace{.5em}#1\hspace{.5em}}}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+   \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+   \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+   \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+   \stepcounter{#1}
+   \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+   \ifnum#1>0
+   \setcounter{homeworkProblemCounter}{#1}
+   \fi
+   \section{Problem \arabic{homeworkProblemCounter}}
+   \setcounter{partCounter}{1}
+   \enterProblemHeader{homeworkProblemCounter}
+}{
+   \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#5}
+\newcommand{\hmwkDueDate}{August 6, 2019}
+\newcommand{\hmwkClass}{CS250}
+\newcommand{\hmwkClassTime}{Summer19}
+\newcommand{\hmwkClassInstructor}{Steven Libby}
+\newcommand{\hmwkAuthorName}{\textbf{Austen Nelson}}
+
+%
+% Title Page
+%
+
+\title{
+   \vspace{2in}
+   \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+   \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:15pm}\\
+   \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+   \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+% \maketitle
+
+% \pagebreak
+
+\begin{homeworkProblem}
+   $$\text{prove } n! > 2^n \; \forall n > 4$$
+   \begin{align*}
+      n = 5, \quad5! = 120,\quad 2^5 = 32,\quad 120 > 32 && \text{Base case of n = 5.}\\
+      k! > 2^k && \text{inductive hypothesis}\\
+      (k+1)! && \text{inductive case}\\
+      =(k+1) k! && \text{definition of factorial}\\
+      (k+1) k! > 2^k (k+1) && \text{because of the inductive hypothesis}\\
+      (k+1) k! > 2^k (2) && \text{because } k > 4, 2 < k + 1\\
+      (k+1) k! > 2^{k+1} && \text{algebra}
+   \end{align*}
+   
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   $$\text{prove } \sum_{i=1}^{n} 2i-1 = n^2$$
+   \begin{align*}
+      n=1, \quad 2-1=1, \quad \sqrt{1} && \text{base case} \\
+      \sum_{i=1}^{k} 2i-1=k^2 && \text{inductive hypothesis} \\
+      \sum_{i=1}^{k+1} 2i-1 && \text{inductive case} \\
+      =k^2 + (2(k+1)-1) && \text{peel and substitute} \\
+      =k^2 + 2k + 1 && \text{algebra} \\
+      =(k+1)^2 && \text{factor}
+   \end{align*}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   $$\text{prove } \sum_{i=1}^{n}i^3 = {\left( \frac{n(n+1)}{2}\right)}^2$$
+
+   \begin{align*}
+      n=1, \quad \frac{2}{2}^2 = 1, \quad 1^3 = 1 && \text{base case} \\
+      \sum_{i=1}^{k+1}i^3 = {\left(\frac{k(k+1)}{2}\right)}^2 && \text{inductive hypothesis} \\
+      {\left(\frac{k(k+1)}{2}\right)}^2 + (k+1)^3 && \text{peel and substitute} \\
+      \left(\frac{(k+1)(k+2)}{2}\right)^2 && \text{algebra}
+   \end{align*}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   \begin{enumerate}[label=\alph*]
+      \item Show that a tree with depth d has $2^{d-1}$ leaves. \\
+         Base case tree of depth one has one leaf. ($2^{1-1} = 1$)\\
+         $L_{d+1} = 2L_d$ because every time a layer is added to the tree every leaf gets 2 leaves added to it. \\
+         As a result, a tree with depth 2 has 2 leaves, depth 3 has 4 leaves, depth 4 has 8 leaves, and so on. This doubling relationship is $2^{d-1}$
+
+      \item Show that a full binary tree with depth d has $2^d-1$ nodes. \\
+         This is easy to demonstrate given that a tree of depth d has $2^{d-1}$ leaves. \\
+         The total number of nodes is the sum of all the leaves at each level of the tree. \\
+         $$\sum_{i=1}^{d}2^{i-1} =2^d-1$$
+         \begin{align*}
+            d=1, \quad 2^0 = 1, \quad 2^1-1 = 1 && \text{base case} \\
+            \sum_{i=1}^{k}2^{i-1} =2^k-1 && \text{inductive hypothesis} \\
+            \sum_{i=1}^{k+1}2^{i-1} && \text{inductive case} \\
+            =2^k-1 + 2^k && \text{peel and substitute} \\
+            =2^{k+1}-1 && \text{algebra}
+         \end{align*}
+
+   \end{enumerate}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   $$\text{prove }\sum_{i=1}^{n}ia^i = \frac{a-(n+1)a^{n+1}+na^{n+2}}{(a-1)^2}$$
+   \begin{align*}
+      n=1, \quad 1a^1 = a, \quad \frac{a-(n+1)a^2+a^3}{(a-1)^2} = a && \text{base case} \\
+      \sum_{i=1}^{k}ia^i = \frac{a-(k+1)a^{k+1}+ka^{k+2}}{(a-1)^2} && \text{inductive hypothesis} \\
+      \sum_{i=1}^{k+1}ia^i && \text{inductive case} \\
+      = \frac{a-(k+1)a^{k+1}+ka^{k+2}}{(a-1)^2} + (k+1)a^{k+1} && \text{peel and substitute} \\
+      =\frac{a-(k+2)(a^{k+2})+(k+1)(a^{k+3})}{(a-1)^2} && \text{algebra}
+   \end{align*}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   prove $length(a \dplus b) = length(a) + length(b)$ using structural induction given: \\
+   \begin{empheq}[box=\widefbox]{align*}
+      \text{concatenation:}&& \text{length:} \\
+      \dplus \colon \mathcal{L} \times \mathcal{L} \to \mathcal{Z} && length : \mathcal{L} \to \mathcal{Z} \\
+      Nil \dplus b & \quad\quad= b & length(Nil) & \quad\quad= 0 & rule 1 \\
+      Cons(h, t) \dplus b & \quad\quad= Cons(h, t \dplus b) & length(Cons(h, t)) & \quad\quad= 1 + length(t) & rule 2
+   \end{empheq}
+   \begin{align*}
+      \text{base case: } \\
+      length(a \dplus Nil) \\
+      &= length(a) && \text{rule one of concatenation} \\
+      &= length(a) + 0 && \text{add zero} \\
+      &= length(a) + length(Nil) && \text{rule one of length} \\
+      \\
+      length(t \dplus b) = length(t) + length(b) &&& \text{inductive hypothesis} \\
+      \\
+      \text{inductive case: } \\
+      length(Cons\; h\; t \dplus  b) \\
+      &=length(Cons\; h (t \dplus b)) && \text{rule two of concatenation} \\
+      &= 1 + length(t \dplus b) && \text{rule two of length} \\
+      &= 1 + length(t) + length(b) && \text{inductive hypothesis}
+   \end{align*}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   \begin{enumerate}[label=\Alph*]
+         \item The first lemma has issues because the set of green vegetables already includes that head of lettuce. This means it cannot be added to the set and the induction is invalid.
+         \item The second lemma depends on the first lemma being true to prove that all edible green things are vegetables. This invalidates it right off the start. \\
+            But let us suppose there are infinite green vegetables. The justification for this lemma requires us to sort an infinite set. This doesn't sound like a good idea\ldots Sorting is an algorithm; algorithms must terminate to be correct. Sorting an infinite set will never terminate.
+   \end{enumerate}
+\end{homeworkProblem}
+
+\end{document}

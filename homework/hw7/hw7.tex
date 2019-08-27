@@ -1,0 +1,309 @@
+
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{empheq}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{url}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\newcommand\dplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
+\newcommand*\widefbox[1]{\fbox{\hspace{.5em}#1\hspace{.5em}}}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+   \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+   \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+   \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+   \stepcounter{#1}
+   \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+   \ifnum#1>0
+   \setcounter{homeworkProblemCounter}{#1}
+   \fi
+   \section{Problem \arabic{homeworkProblemCounter}}
+   \setcounter{partCounter}{1}
+   \enterProblemHeader{homeworkProblemCounter}
+}{
+   \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#7}
+\newcommand{\hmwkDueDate}{August 20, 2019}
+\newcommand{\hmwkClass}{CS250}
+\newcommand{\hmwkClassTime}{Summer19}
+\newcommand{\hmwkClassInstructor}{Steven Libby}
+\newcommand{\hmwkAuthorName}{\textbf{Austen Nelson}}
+
+%
+% Title Page
+%
+
+\title{
+   \vspace{2in}
+   \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+   \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:15pm}\\
+   \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+   \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+% \maketitle
+
+% \pagebreak
+
+\begin{homeworkProblem}
+You flip 12 coins, what are the odds that 7 of them are heads?
+   $$\binom{12}{7} \cdot .5^7 \cdot (1-.5)^{12-7} = .193$$
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+What are the odds of rolling 7 with 2 dice?
+   $$6 \cdot {\frac{1}{6 \cdot 6}} = \frac{1}{6}$$
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+What is the probability of drawing a pair in a 5 card hand?\\
+Note: for this question 3 of a kind, 2 pair, and 4 of a kind will all count as pairs \\
+   \vspace{.35cm} \\
+Find the compliment of all the cards having different values:
+   $$1 - \frac{52}{52} * \frac{48}{51} * \frac{44}{50} * \frac{40}{49} * \frac{36}{48} = .49$$
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+You flip a coin until you get heads, how many times would you expect to flip the coin?
+   $$2\text{ times}$$
+   \begin{enumerate}[{(a)}]
+    \item What is the probability of getting heads on the  $n^{th}$ flip? \\
+    Assuming this is the first heads:
+    $$\frac{1}{2^n}$$
+    \item What is the expected value of this distribution over all $n$?
+    $$\frac{1}{2}$$
+\end{enumerate}
+Note:  We haven't learned enough to actually solve this problem, so you don't need to find a closed form.\\
+However, If you can find a closed form, then feel free.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Assuming that an M\&Ms bag has exactly 13 of each color.  What are the odds that you pull out 3 red M\&Ms from the bag. \\ \\
+   $13 \cdot 6 = 78$ M\&Ms total\\\\
+   Without replacement:
+   $$\frac{13}{78} \cdot \frac{12}{77} \cdot \frac{11}{76} = \frac{1}{266}$$
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+When buying a lottery tick you notice that the payouts are a little different.
+Each ticket costs \$1, and you pick 6 out of the 100 numbers.
+You get \$1 for matching 1 number, \$10 for matching 2 numbers, and so on up to \$100,000 for matching all 6 numbers.
+What is the expected payout of this lottery?\\
+   \vspace{.35cm} \\
+   There are $\binom{100}{6}$ ways to choose the 6 numbers. \\
+For one matching number there are $\binom{6}{1}$ ways to choose the single matching number and $\binom{94}{5}$ ways to choose the wrong numbers. This pattern continues for the rest of the winnings classes\\
+   \begin{align*}
+      \text{one number} && \frac{\binom{6}{1} \cdot \binom{94}{5}}{\binom{100}{6}} &= .276 \\
+      \text{two numbers} && \frac{\binom{6}{2} \cdot \binom{94}{4}}{\binom{100}{6}} &= .0383 \\
+      \text{three numbers} && \frac{\binom{6}{3} \cdot \binom{94}{3}}{\binom{100}{6}} &= .00224 \\
+      \text{four numbers} && \frac{\binom{6}{4} \cdot \binom{94}{2}}{\binom{100}{6}} &= .000055 \\
+      \text{five numbers} && \frac{\binom{6}{5} \cdot \binom{94}{1}}{\binom{100}{6}} &= 4.73 \cdot 10^{-7} \\
+      \text{six numbers} && \frac{\binom{6}{6} \cdot \binom{94}{0}}{\binom{100}{6}} &= 8.38 \cdot 10^{-10} \\
+   \end{align*}
+   To find the expected value of this lottery each of these probabilities must be multiplied by the payout and summed. Represented as:
+   $$\sum_{i=0}^{5} \frac{\binom{6}{1+i} \cdot \binom{94}{5-i} \cdot 10^i}{\binom{100}{6}} = .9447 \text{ dollars}$$
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+There is a new drug out that is advertised as curing boringness.
+Obviously this is a huge breakthrough in medical science.
+And so far the results seem promising.
+If you are boring, there is an 80\% chance that the drug will make you more interesting.
+However, there's a catch.
+If you're not boring, then there's an 80\% chance that the drug will make you less interesting.
+It's well known that most people are boring.
+We'll estimate this by saying that 90\% of people are boring.
+What is the probability that this drug will backfire, and make you less interesting?
+remember: you don't know if you're boring or not.\\
+   \vspace{.35cm} \\
+For the drug to backfire you have to start with being interesting. This is a .1 probability. Then there is a .8 probability the drug backfires. 
+$$.1 \cdot .8 = .08$$
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+Oh NO!\\
+We gave the drug from the last problem to little Timmy,
+and he immediately asked if he could read Moby Dick.
+Clearly the drug backfired.\\
+I should really stop picking on classic novels.\\
+What is the probability that Timmy boring to begin with? \\
+   \vspace{.35cm} \\
+Let's define a state for the effect of the drug to create some conditional probabilities. 
+This state is success and failure. If you are boring,
+the drug succeeds if it makes you more interesting, but fails if it doesn't. 
+If you are interesting, it fails if it makes you less interesting
+but succeeds if it doesn't. \\\\
+Here are the given probabilities. Probability of: \\
+being boring, $P(B) = .9$ \\
+not being boring, $P(B^c) = .1$ \\
+drug succeeding if you are boring, $P(S \mid B) = .8$ \\
+drug failing if you are boring, $P(S^c \mid B) = .2$ \\
+drug succeeding if you are not boring, $P(S \mid B^c) = .2$ \\
+drug failing if you are not boring, $P(S^c \mid B^c) = .8$ \\\\
+Okay, the question is asking for the probability that Timmy is boring given that the drug failed (because if it worked he would be playing video games). WANT: $P(B \mid S^c)$ \\
+\begin{align*}
+   \text{By Bayes' theorem:} && P(B \mid S^c) &= \frac{P(S^c \mid B) \cdot P(B)}{P(S^c)} \\ \\
+   \text{And by the Law of Total Probability} && P(S^c) &= P(S^c \mid B) \cdot P(B) + P(S^c \mid B^c) \cdot P(B^c) \\ \\
+   \text{Substitute} && P(B \mid S^c) &= \frac{P(S^c \mid B) \cdot P(B)}{P(S^c \mid B) \cdot P(B) + P(S^c \mid B^c) \cdot P(B^c)} \\ \\
+   &&&=\frac{(.2)(.9)}{(.2)(.9) + (.8)(.1)} \\ \\
+   && P(B \mid S^c) &=.69
+\end{align*}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+Prove that the expected value of a random variable is linear.
+That is, prove $E[aX + b] = aE[X] + b$.
+\begin{align*}
+   E(X) &= \sum_{i=1}^{n}x_iP(X_i) && \text{definition of expected value} \\
+   \sum_{i=1}^{n} P(X_i) &= 1 && \text{definition of random variable} \\
+   E(aX + b) &= \sum_{i=1}^{n}(ax_i+b)P(X_i)&& \text{definition of expected value} \\
+   &= a\sum_{i=1}^{n}x_iP(X_i) + \sum_{i=1}^{n}P(X_i)b && \text{algebra} \\
+   &= aE(X) + b && \text{using definition of expected value and random variable}
+\end{align*}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+Veritasium made a video ``Is Most Published Research Wrong''.\\
+\url{https://www.youtube.com/watch?v=42QuXLucH3Q}
+
+In this video he goes over a topic that we don't really talk about a lot in science.
+It is possible to do everything correctly, and still get wrong result published surprisingly often.
+He then goes on to other statistical problems that can arise in research.
+
+For this problem I want to take a look that the importance of replication studies.
+These are studies where a scientist doesn't do anything other then verify other scientists' work.
+These can reduce the problems raised in this video significantly.
+In the original video, he shows how about 1/3 of published results could be incorrect using Bayes' theorem.
+Use Bayes' theorem to find the odds of a study being incorrect after two experiments verifying it.\\
+   \vspace{.35cm} \\
+First let's list the probabilities Veritasium uses to get to that $\frac{1}{3}$ number to make it formal. \\
+Probability of:
+a conjecture being correct, $P(C) = .1$ \\
+a conjecture being incorrect, $P(C_c) = .9$ \\
+a correct conjecture resulting in a true positive (statistical power) $P(+ \mid C) = .8$ \\
+a correct conjecture resulting in a false negative $P(+^c \mid C) = .2$ \\
+an incorrect conjecture resulting in a false positive (p-value) $P(+ \mid C^c) = .05$ \\
+an incorrect conjecture resulting in a true negative $P(+^c \mid C^c) = .95$ \\
+\\
+Now lets check Veritasium's math on the probability of a conjecture being correct given a positive hypothesis test.
+\begin{align*}
+   \text{Want probability of C given + } && P(C \mid +) &= \frac{P(+ \mid C) \cdot P(C)}{P(+)} \\
+   \text{By the law of total probability } && P(+) &= P(+ \mid C) \cdot P(C) + P(+ \mid C^c) \cdot P(C^c) \\
+   \text{so... } && P(C \mid +) &= \frac{.8 \cdot .1}{.8 \cdot .1 + .05 \cdot .9} \\
+   &&&= .64
+\end{align*} \\
+Good it looks like we got the same results. $P(C \mid +) = .64$ which means $P(C^c \mid +) = .36$ \\
+For the next part we have to adjust our sample space. We only consider experiments that provided + results. \\
+This means our $P(C \mid +) = .64$ and $P(C^c \mid +) = .36)$ become our new $P(C)$ and $P(C_c)$ \\
+Assuming statistical power and p-value remain the same for the second round we can perform the same analysis. \\
+$$P(C \mid ++) = \frac{.8 \cdot .64}{.8 \cdot .64 + .05 \cdot .36}$$$$ = .9715$$
+This seems like a pretty reasonable conclusion. The problem with this analysis is that it assumes test results can
+actually be modeled by use of a random variable. In the real world, confounding variables like sampling methods,
+experiment design, researcher cognitive biases, etc, end up being replicated. Close reproduction studies are most effective
+for identifying data dredging (p-hacking) and statistical anomalies while reproduction with adjustment to methods can identify
+poorly designed studies. The unfortunate result of this wonderful mess is a popular cultural distrust in science, even when scientific
+consensus exists (vaccines, climate change, evolution).
+\end{homeworkProblem}
+\end{document}
